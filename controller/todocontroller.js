@@ -21,7 +21,7 @@ var Todo = mongoose.model('Todo',todoSchema)
 var urlencodedParser = bodyParser.urlencoded({extended:false})
 module.exports = function(app){
 
-  app.get('/todo',function(req,res){
+  app.get('/',function(req,res){
     //get data from mongodb and pass to view
     Todo.find({},function(err,data){
       if(err) throw err
@@ -29,7 +29,7 @@ module.exports = function(app){
     })
   })
 
-  app.post('/todo',urlencodedParser,function(req,res){
+  app.post('/',urlencodedParser,function(req,res){
     //get data from view and add it to mongoDb
     var newTodo = Todo(req.body).save(function(err,data){
       if(err) throw err
@@ -39,7 +39,7 @@ module.exports = function(app){
       // res.json(data)
   })
 
-  app.delete('/todo/:item',function(req,res){
+  app.delete('/:item',function(req,res){
     //delete the requested item from mongoDb
 
     Todo.find({item:req.params.item.replace(/\-/g," ")}).remove(function(err,data){
